@@ -1,19 +1,29 @@
 version: 0.0
 os: linux
 files:
-  - source: /build/
+  - source: /
     destination: /var/www/hrsms/
 hooks:
-  BeforeInstall:
-    - location: scripts/install_dependencies.sh
-      timeout: 300
-  AfterInstall:
-    - location: scripts/build_project.sh
-      timeout: 300
-  ApplicationStart:
-    - location: scripts/start_server.sh
-      timeout: 300
   ApplicationStop:
     - location: scripts/stop_server.sh
       timeout: 300
-     
+      
+  BeforeInstall:
+    - location: scripts/before_install.sh
+      timeout: 300
+      
+  AfterInstall:
+    - location: scripts/install_dependencies.sh
+      timeout: 300
+      
+    - location: scripts/build_project.sh
+      timeout: 300
+      
+  ApplicationStart:
+    - location: scripts/start_server.sh
+      timeout: 300
+      
+  ValidateService:
+    - location: scripts/validate_service.sh
+      timeout: 300
+      
